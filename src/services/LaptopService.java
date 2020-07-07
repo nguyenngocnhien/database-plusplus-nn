@@ -140,6 +140,17 @@ public class LaptopService {
                 sql="select * from laptop order by price desc";
             }
         }
+        if (priceFrom==null && priceTo==null){
+            String[] s = sql.split("and");
+            for (int i = 0; i < s.length-1; i++) {
+
+                if (i==0){
+                    sql=s[0]+s[1];
+                }else {
+                    sql+="and"+s[i+1];
+                }
+            }
+        }
         return resultSet(sql);
     }
 
