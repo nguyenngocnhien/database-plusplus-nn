@@ -94,7 +94,7 @@ public class Application {
                         break;
                 }
             case 4:
-                laptopService.findByUserInput(null,null,null,null,"4","intel","vivo",null,"asc");
+                laptopService.findByUserInput(null,null,"asus",null,"4","intel",null,null,"asc");
                 break;
             case 5:
                 laptopService.orderBySold();

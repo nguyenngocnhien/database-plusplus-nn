@@ -126,12 +126,6 @@ public class LaptopService {
                 sql+="Order by price desc";
             }
         }
-//        if (sort=="asc"){
-//            sql+="Order by price asc";
-//        }
-//        if (sort=="desc"){
-//            sql+="Order by price desc";
-//        }
         if (sort!=null && priceFrom==null && priceTo == null && maker==null && screenSize == null && ram == null && cpu == null && type == null && gpu == null){
             if (sort=="asc"){
                 sql="select*from laptop order by price asc";
