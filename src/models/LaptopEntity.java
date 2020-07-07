@@ -3,16 +3,27 @@ package models;
 import java.sql.Timestamp;
 
 public class LaptopEntity {
-    private int id,sold;
+    private int id, sold;
     private Float price;
-    private String name,url,maker,type,ram,cpu,ssd,hdd,card,screen_resolution,screen_size;
-    private Timestamp created_timestamp,last_updated_timestamp;
+    private String name, url, maker, type, ram, cpu, ssd, hdd, card, screen_resolution, screen_size;
+    private Timestamp created_timestamp, last_updated_timestamp;
+
+    @Override
+    public String toString() {
+        return
+                "  " + name +
+                "  " + maker +
+                "  " + type +
+                "  " + price +
+                "  " + sold +
+                "  " + screen_resolution;
+    }
 
     public LaptopEntity() {
     }
 
-    public LaptopEntity(int id,  String name, String url, String maker, String type, String ram, String cpu,
-                        String ssd, String hdd,Float price, String card, String screen_resolution, String screen_size,int sold,
+    public LaptopEntity(int id, String name, String url, String maker, String type, String ram, String cpu,
+                        String ssd, String hdd, Float price, String card, String screen_resolution, String screen_size, int sold,
                         Timestamp created_timestamp, Timestamp last_updated_timestamp) {
         this.id = id;
         this.name = name;

@@ -25,23 +25,16 @@ public class Application {
         System.out.println("1. Tìm kiếm latop theo hãng");
         System.out.println("2. Tìm kiếm theo giá");
         System.out.println("3. Tìm kiếm theo ổ cứng và hãng");
+        System.out.println("4. Tùy chọn tìm kiếm");
+        System.out.println("5. Danh sách laptop bán chạy nhất");
         LaptopService laptopService = new LaptopService( connection);
-
         int option = scanner.nextInt();
         scanner.nextLine();
         switch (option){
             case 1:
                 System.out.println("Nhập vào hãng:");
                 String maker = scanner.nextLine();
-                List<LaptopEntity> laptopEntities = laptopService.findAllByMaker(maker.trim().toUpperCase());
-                if (laptopEntities.isEmpty()){
-                    System.out.println("Không có sản phẩm phù hợp");
-                }else {
-                    for (LaptopEntity le:laptopEntities
-                    ) {
-                        System.out.println(le.getName()+"  ||  "+le.getMaker()+"  ||  "+le.getType()+"  ||  "+le.getCard());
-                    }
-                }
+                laptopService.findAllByMaker(maker.trim().toUpperCase());
                 break;
             case 2:
                 List<LaptopEntity> laptopEntities1;
@@ -57,20 +50,12 @@ public class Application {
                     case 1:
                         System.out.println("Nhập price min :");
                         min = scanner.nextLong();
-                        laptopEntities1 = laptopService.findByPrice(min,null);
-                        for (LaptopEntity l:laptopEntities1
-                        ) {
-                            System.out.println(l.getName() +"      Price = "+ l.getPrice());
-                        }
+                        laptopService.findByPrice(min,null);
                         break;
                     case 2:
                         System.out.println("Nhập price max :");
                         max = scanner.nextLong();
-                        laptopEntities1 = laptopService.findByPrice(null,max);
-                        for (LaptopEntity l:laptopEntities1
-                        ) {
-                            System.out.println(l.getName() +"      Price = "+ l.getPrice());
-                        }
+                        laptopService.findByPrice(null,max);
                         break;
                     case 3:
                         System.out.println("Nhập price from...to... :");
@@ -78,15 +63,7 @@ public class Application {
                         min = scanner.nextLong();
                         System.out.println("Nhập price thứ 2 : ");
                         max = scanner.nextLong();
-                        laptopEntities1 = laptopService.findByPrice(min,max);
-                        if (laptopEntities1.isEmpty()){
-                            System.out.println("Không tìm thấy sản phẩm phù hợp");
-                        }else{
-                            for (LaptopEntity l:laptopEntities1
-                            ) {
-                                System.out.println(l.getName() +"      Price = "+ l.getPrice());
-                            }
-                        }
+                        laptopService.findByPrice(min,max);
                 }
                 break;
             case 3:
@@ -105,15 +82,7 @@ public class Application {
                         scanner.nextLine();
                         System.out.println("Mời bạn nhập hãng sản xuất cần tìm : ");
                         makers = scanner.nextLine();
-                        laptopEntities2 = laptopService.findByHddAndName(hdd,null,makers);
-                        if (laptopEntities2.isEmpty()){
-                            System.out.println("Không tìm thấy sản phẩm phù hợp");
-                        }else{
-                            for (LaptopEntity l:laptopEntities2
-                            ) {
-                                System.out.println(l.getName() +"      HDD = "+ l.getHdd());
-                            }
-                        }
+                        laptopService.findByHddAndName(hdd,null,makers);
                         break;
                     case 2:
                         System.out.println("Mời bạn nhập dung lượng SDD cần tìm : ");
@@ -121,18 +90,15 @@ public class Application {
                         scanner.nextLine();
                         System.out.println("Mời bạn nhập hãng sản xuất cần tìm : ");
                         makers = scanner.nextLine();
-                        laptopEntities2 = laptopService.findByHddAndName(null,ssd,makers);
-                        if (laptopEntities2.isEmpty()){
-                            System.out.println("Không tìm thấy sản phẩm phù hợp");
-                        }else{
-                            for (LaptopEntity l:laptopEntities2
-                            ) {
-                                System.out.println(l.getName() +"      SDD = "+ l.getSsd());
-                            }
-                        }
+                        laptopService.findByHddAndName(null,ssd,makers);
                         break;
                 }
             case 4:
+                laptopService.findByUserInput(800000l,null,null,null,null,null,null,null,"asc");
+                break;
+            case 5:
+                laptopService.orderBySold();
+                break;
+                }
         }
-}
 }
