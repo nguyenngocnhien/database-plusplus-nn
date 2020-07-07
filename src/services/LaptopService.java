@@ -90,7 +90,7 @@ public class LaptopService {
 
     public List<LaptopEntity> findByUserInput(Long priceFrom, Long priceTo, String maker, Float screenSize,
                                               String ram, String cpu, String type, String gpu, String sort) {
-        String sql="select * from laptop where ";
+        String sql="select * from laptop where true ";
         if (priceFrom!=null && priceTo!=null){
             sql+="price between "+priceFrom+" and "+priceTo+" ";
         }
@@ -118,7 +118,7 @@ public class LaptopService {
         if (gpu!=null){
             sql+="and card='%"+gpu+"%' ";
         }
-        if (priceFrom!=null || priceTo != null || maker!=null || screenSize != null || ram != null || cpu != null || type != null || gpu != null && sort!=null) {
+        if (sort!=null) {
             if (sort=="asc"){
                 sql+="Order by price asc";
             }
@@ -126,29 +126,29 @@ public class LaptopService {
                 sql+="Order by price desc";
             }
         }
-        if (sort!=null && priceFrom==null && priceTo == null && maker==null && screenSize == null && ram == null && cpu == null && type == null && gpu == null){
-            if (sort=="asc"){
-                sql="select*from laptop order by price asc";
-            }
-            if (sort=="desc"){
-                sql="select * from laptop order by price desc";
-            }
-        }
-        if (priceFrom==null && priceTo==null){
-            String[] s = sql.split("and");
-            for (int i = 0; i < s.length-1; i++) {
-
-                if (i==0){
-                    sql=s[0]+s[1];
-                }else {
-                    sql+="and"+s[i+1];
-                }
-            }
-        }
+//        if (sort!=null && priceFrom==null && priceTo == null && maker==null && screenSize == null && ram == null && cpu == null && type == null && gpu == null){
+//            if (sort=="asc"){
+//                sql="select*from laptop order by price asc";
+//            }
+//            if (sort=="desc"){
+//                sql="select * from laptop order by price desc";
+//            }
+//        }
+//        if (priceFrom==null && priceTo==null){
+//            String[] s = sql.split("and");
+//            for (int i = 0; i < s.length-1; i++) {
+//
+//                if (i==0){
+//                    sql=s[0]+s[1];
+//                }else {
+//                    sql+="and"+s[i+1];
+//                }
+//            }
+//        }
         return resultSet(sql);
     }
 
     public List<LaptopEntity> orderBySold() {
-       return resultSet("select * from laptop order by sold desc");
+       return resultSet("select * from laptop order by sold desc limit 1");
     }
 }
