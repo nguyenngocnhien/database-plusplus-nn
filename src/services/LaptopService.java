@@ -1,9 +1,12 @@
 package services;
 
+import models.Counter;
 import models.LaptopEntity;
+import models.Statistic;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -150,5 +153,43 @@ public class LaptopService {
 
     public List<LaptopEntity> orderBySold() {
        return resultSet("select * from laptop order by sold desc limit 1");
+    }
+    public  List<Counter> getCounterByMaker(){
+        try {
+            List<Counter> counters = new ArrayList<>();
+            String sql = "SELECT maker , count(*) AS quantity from laptop GROUP BY maker ORDER BY quantity Desc";
+            Statement stmt = null;
+            stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()){
+                Counter counter = new Counter();
+                counter.setMaker(rs.getString(1));
+                counter.setQuantity(rs.getInt(2));
+                counters.add(counter);
+            }
+            return counters;
+        } catch (SQLException e) {
+//            e.printStackTrace();
+            return null;
+        }
+    }
+    public  List<Statistic> getStatisticByMaker(){
+        List<Statistic> statistics = new ArrayList<>();
+        Statement stmt = null;
+        try {
+            stmt = con.createStatement();
+            String sql ="SELECT MAKER,SUM(SOLD) AS Sold , SUM(PRICE) AS totalMoney FROM laptop GROUP BY MAKER ORDER BY totalMoney DESC";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()){
+                Statistic statistic = new Statistic();
+                statistic.setMaker(rs.getString(1));
+                statistic.setSold(rs.getInt(2));
+                statistic.setTotalMoney(rs.getFloat(3));
+                statistics.add(statistic);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return statistics;
     }
 }
