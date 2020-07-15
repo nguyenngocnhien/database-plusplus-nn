@@ -6,6 +6,7 @@ import services.LaptopService;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Scanner;
 
@@ -13,8 +14,8 @@ public class Application {
     public static void main(String[] args) {
         Connection connection = null;
         try {
-            connection = DriverManager
-                    .getConnection("jdbc:mysql://localhost:3306/store_cms_plusplus", "root", "nnhien166@@");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/store_cms_plusplus", "root", "nnhien166@@");
+
             System.out.println("SQL Connection to database established!");
 
         } catch (SQLException e) {
@@ -119,9 +120,11 @@ public class Application {
                 if (statistics.isEmpty()) {
                     System.out.println("ERROR");
                 } else {
+                    DecimalFormat df = new DecimalFormat();
+                    df.setMaximumFractionDigits(2);
                     for (Statistic s : statistics
                     ) {
-                        System.out.println(s.toString());
+                        System.out.println(s.toString() +", Tong tien : "+df.format(s.getTotalMoney())+"(VND)");
                     }
                 }
                 break;

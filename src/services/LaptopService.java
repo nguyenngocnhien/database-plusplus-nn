@@ -8,15 +8,14 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 public class LaptopService {
     private Connection con;
-
     public LaptopService() {
     }
-
     public LaptopService(Connection con) {
         this.con = con;
     }
@@ -129,25 +128,6 @@ public class LaptopService {
                 sql+="Order by price desc";
             }
         }
-//        if (sort!=null && priceFrom==null && priceTo == null && maker==null && screenSize == null && ram == null && cpu == null && type == null && gpu == null){
-//            if (sort=="asc"){
-//                sql="select*from laptop order by price asc";
-//            }
-//            if (sort=="desc"){
-//                sql="select * from laptop order by price desc";
-//            }
-//        }
-//        if (priceFrom==null && priceTo==null){
-//            String[] s = sql.split("and");
-//            for (int i = 0; i < s.length-1; i++) {
-//
-//                if (i==0){
-//                    sql=s[0]+s[1];
-//                }else {
-//                    sql+="and"+s[i+1];
-//                }
-//            }
-//        }
         return resultSet(sql);
     }
 
@@ -169,7 +149,7 @@ public class LaptopService {
             }
             return counters;
         } catch (SQLException e) {
-//            e.printStackTrace();
+            e.printStackTrace();
             return null;
         }
     }
@@ -178,7 +158,7 @@ public class LaptopService {
         Statement stmt = null;
         try {
             stmt = con.createStatement();
-            String sql ="SELECT MAKER,SUM(SOLD) AS Sold , SUM(PRICE) AS totalMoney FROM laptop GROUP BY MAKER ORDER BY totalMoney DESC";
+            String sql ="SELECT MAKER,SUM(Sold) AS Sold , SUM(Price*Sold) AS totalMoney FROM laptop GROUP BY MAKER ORDER BY totalMoney";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()){
                 Statistic statistic = new Statistic();
@@ -187,6 +167,7 @@ public class LaptopService {
                 statistic.setTotalMoney(rs.getFloat(3));
                 statistics.add(statistic);
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

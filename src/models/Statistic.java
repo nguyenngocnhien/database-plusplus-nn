@@ -7,9 +7,8 @@ public class Statistic {
 
     @Override
     public String toString() {
-        return "Hang='" + maker + '\'' +
-                ", Da ban=" + sold +
-                ", Tong tien=" + totalMoney ;
+        return "Hang : " + maker +
+                ", Da ban : " + sold;
     }
 
     public Statistic() {
