@@ -10,7 +10,7 @@ import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Scanner;
 
-public class Application {
+public class ApplicationLaptop {
     public static void main(String[] args) {
         Connection connection = null;
         try {
@@ -69,6 +69,7 @@ public class Application {
                         System.out.println("Nhập price thứ 2 : ");
                         max = scanner.nextLong();
                         laptopService.findByPrice(min, max);
+                        break;
                 }
                 break;
             case 3:
@@ -98,6 +99,7 @@ public class Application {
                         laptopService.findByHddAndName(null, ssd, makers);
                         break;
                 }
+                break;
             case 4:
                 laptopService.findByUserInput(null, null, null, null, null, null, null, null, "asc");
                 break;
@@ -128,6 +130,12 @@ public class Application {
                     }
                 }
                 break;
+            case 8:
+                laptopService.insertDataForLaptop("MSI G63","..","MSI","MSI G63","8gb",null,null,null,null,null,null,null
+                ,null,null,null);
+                break;
+            case 9:
+                laptopService.updateSold(18,80);
         }
 
     }

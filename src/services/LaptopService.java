@@ -4,10 +4,7 @@ import models.Counter;
 import models.LaptopEntity;
 import models.Statistic;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +17,7 @@ public class LaptopService {
         this.con = con;
     }
 
-    public List<LaptopEntity> resultSet(String sql) {
+    private List<LaptopEntity> resultSet(String sql) {
         List<LaptopEntity> laptopEntities = new ArrayList<>();
         try {
             Statement stmt = con.createStatement();
@@ -172,5 +169,30 @@ public class LaptopService {
             e.printStackTrace();
         }
         return statistics;
+    }
+    public List<LaptopEntity> insertDataForLaptop (String name, String url, String maker, String type, String ram, String cpu,
+    String ssd, String hdd, Float price, String card, String screen_resolution, String screen_size, Integer sold,
+    Timestamp created_timestamp, Timestamp last_updated_timestamp ){
+        try {
+            Statement stmt = con.createStatement();
+            String sql = "INSERT IGNORE INTO  laptop (name,url,maker,type,ram,cpu,ssd,hdd,price,card,screen_resolution,screen_size,sold,created_timestamp,last_updated_timestamp) VALUES ('"+name+"','"+url+"','"+maker+"','"+type+"','"+ram+"',"+cpu+","+ssd+","+hdd+","+price+","+card+","+screen_resolution+","+screen_size+
+                    ","+sold+","+created_timestamp+","+last_updated_timestamp+")";
+            int rs= stmt.executeUpdate(sql);
+            System.out.println(rs);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        String query="SELECT * FROM laptop WHERE maker='"+maker+"'";
+        return resultSet(query);
+    }
+    public void updateSold(int id, Integer sold){
+        try {
+            Statement stmt = con.createStatement();
+            String sql ="UPDATE laptop SET sold ="+sold+", last_updated_timestamp=null  WHERE id="+id+" ";
+            int rs = stmt.executeUpdate(sql);
+            System.out.println(rs);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
