@@ -14,6 +14,7 @@ public class ApplicationStudent {
             System.out.println("Connection Fail"+e);
         }
         StudentService studentService = new StudentService(connection);
-        studentService.updateNoOfStudentForDepartments();
+        studentService.updateNoOfStudentInDepartments();
+        studentService.updateAverageScore();
     }
 }

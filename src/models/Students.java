@@ -2,15 +2,11 @@ package models;
 
 public class Students {
     private String StudentID, LastName, FirtName, Sex, DateOfBith, PlaceOfBith, DepID;
-    private int Scholarship, AverageScore, Quantity;
+    private int Scholarship, AverageScore;
 
     public Students() {
     }
 
-    public Students(String depID, int quantity) {
-        DepID = depID;
-        Quantity = quantity;
-    }
 
     public Students(String studentID, String lastName, String firtName, String sex, String dateOfBith, String placeOfBith, String depID, int scholarship, int averageScore) {
         StudentID = studentID;
@@ -96,11 +92,4 @@ public class Students {
         AverageScore = averageScore;
     }
 
-    public int getQuantity() {
-        return Quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        Quantity = quantity;
-    }
 }
